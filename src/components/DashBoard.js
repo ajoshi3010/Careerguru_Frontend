@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import { getJobRecommendations } from '../services/jobService';
 import '../styles/DashBoard.css';
@@ -21,6 +22,14 @@ const Dashboard = () => {
             .catch((error) => console.error('Error:', error));
     }, []);
 
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        // Clear the token from localStorage
+        localStorage.removeItem('token');
+        // Redirect the user to the homepage or login page
+        navigate('/')
+      };
+
     return (
         <div className="container">
             <h2>Welcome to the Dashboard!</h2>
@@ -38,6 +47,7 @@ const Dashboard = () => {
                 ))}
             </ul>
             {/* You can add other content or features here */}
+            <button onClick={handleLogout}>Logout</button>
         </div>
     );
 };
